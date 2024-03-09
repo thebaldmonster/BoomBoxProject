@@ -1,20 +1,17 @@
-# led_control.py
-from rpi_ws281x import PixelStrip, Color
+from rpi_ws281x import *
 
-# LED strip configuration
-LED_COUNT = 150
+LED_COUNT = 4
 LED_PIN = 18
 LED_FREQ_HZ = 800000
 LED_DMA = 10
 LED_BRIGHTNESS = 255
 LED_INVERT = False
 
-class LEDControl:
-    def __init__(self):
-        self.strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
-        self.strip.begin()
+strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
+strip.begin()
 
-    def set_all_leds(self, color):
-        for i in range(self.strip.numPixels()):
-            self.strip.setPixelColor(i, color)
-        self.strip.show()
+def color_wipe(color, wait_ms=50):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, color)
+        strip.show()
+        time.sleep(wait_ms / 1000.0)
